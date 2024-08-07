@@ -7,23 +7,44 @@ Signature="$WINDOWS NT$"
 Class=System
 ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318}
 Provider=%ManufacturerName%
-DriverVer=
+DriverVer=08/07/2024
 CatalogFile=Drv.cat
 PnpLockdown=1
 
 [DestinationDirs]
-DefaultDestDir = 13
+DefaultDestDir = 12 ; Specifies the drivers directory
 
 [SourceDisksNames]
 1 = %DiskName%,,,""
 
 [SourceDisksFiles]
+Drv.sys=1
 
 [Manufacturer]
-%ManufacturerName%=Standard,NT$ARCH$.10.0...16299 ; %13% support introduced in build 16299
+%ManufacturerName%=Standard,NTamd64
 
-[Standard.NT$ARCH$.10.0...16299]
+[Standard.NTamd64]
+%DeviceDesc%=DriverInstall, Root\Drv
+
+[DriverInstall]
+CopyFiles=DriverCopyFiles
+
+[DriverInstall.Services]
+AddService=%ServiceName%,0x00000002,ServiceInstallSection
+
+[ServiceInstallSection]
+DisplayName=%ServiceDisplayName%
+ServiceType=1 ; SERVICE_KERNEL_DRIVER
+StartType=3 ; SERVICE_DEMAND_START
+ErrorControl=1 ; SERVICE_ERROR_NORMAL
+ServiceBinary=%12%\Drv.sys
+
+[DriverCopyFiles]
+Drv.sys
 
 [Strings]
-ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ManufacturerName="Your Manufacturer Name"
 DiskName="Drv Source Disk"
+DeviceDesc="Sample Device Description"
+ServiceName="SampleService"
+ServiceDisplayName="Sample Driver Service"
