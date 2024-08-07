@@ -22,6 +22,24 @@ void OnLoadImage(
 	UNREFERENCED_PARAMETER(ProcessId);
 	UNREFERENCED_PARAMETER(ImageInfo);
 
+
+	NTSTATUS status;
+
+	ASSERT(FullImageName);
+	ASSERT(ImageInfo);
+
+	STATIC_UNICODE_STRING(kernel32, "\\kernel32.dll");
+
+	// We are looking for kernel32.dll only - skip the rest
+	if (!ImageInfo->SystemModeImage &&			// Skip anything mapped into kernel
+		ProcessId == PsGetCurrentProcessId() &&	// Our section can be mapped remotely into this process - we don't need that
+		CFunc::IsSuffixedUnicodeString(FullImageName, &kernel32) &&
+		CFunc::IsMappedByLdrLoadDll(&kernel32)
+		)
+	{
+
+	}
+
 }
 
 NTSTATUS FreeResources()
