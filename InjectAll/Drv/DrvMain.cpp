@@ -6,7 +6,7 @@ void NTAPI DriverUnload(PDRIVER_OBJECT DriverObject)
 {
 	// Routine that is called when driver is unloaded
 	NTSTATUS status = 0;
-	DbgPrintLine("DiverUnLoad(0x%p), status=0x%x", DriverObject, status);
+	DbgPrintLine("DiverUnload(0x%p), status=0x%x", DriverObject, status);
 }
 
 extern "C" NTSTATUS NTAPI DriverEntry(
@@ -19,7 +19,7 @@ extern "C" NTSTATUS NTAPI DriverEntry(
 	UNREFERENCED_PARAMETER(RegistryPath);
 
 	// Debugging output function
-	DbgPrintLine("DiverLoad(0x%p, %wZ)" , DriverObject, RegistryPath);
+	DbgPrintLine("DiverLoad(0x%p, %wZ)", DriverObject, RegistryPath);
 	DriverObject->DriverUnload = DriverUnload;
 
 	return 0;
