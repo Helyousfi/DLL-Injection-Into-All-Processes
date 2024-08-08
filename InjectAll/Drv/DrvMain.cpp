@@ -85,6 +85,7 @@ extern "C" NTSTATUS NTAPI DriverEntry(
 	_In_ PUNICODE_STRING RegistryPath
 )
 {
+	DbgPrint("TESTING CUSTOM DRIVER");
 	// Main Driver entry routine
 	UNREFERENCED_PARAMETER(DriverObject);
 	UNREFERENCED_PARAMETER(RegistryPath);
