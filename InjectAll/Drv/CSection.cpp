@@ -24,7 +24,7 @@
 //  
 //
 #include "CSection.h"
-
+#include "CFunc.h"			//Aux functions
 
 NTSTATUS CSection::Initialize(SECTION_TYPE type)
 {
@@ -61,7 +61,7 @@ NTSTATUS CSection::GetSection(DLL_STATS** ppOutSectionInfo)
 		Context = NULL;
 
 		//Alloc memory
-		DLL_STATS* pDStats = (DLL_STATS*)ExAllocatePoolWithTag(ALLOC_TYPE_OnLoadImage, sizeof(DLL_STATS), TAG('kDSm'));
+		DLL_STATS* pDStats = (DLL_STATS*)ExAllocatePool2(ALLOC_TYPE_OnLoadImage, sizeof(DLL_STATS), TAG('kDSm'));
 		if (pDStats)
 		{
 			//Need to "trick" the system into creating a KnownDll section for us with the SD of the kernel32.dll section
@@ -292,7 +292,7 @@ NTSTATUS CSection::CreateKnownDllSection(DLL_STATS& outStats)
 				}
 
 				//Allocate mem
-				oaFakeDll.SecurityDescriptor = ExAllocatePoolWithTag(ALLOC_TYPE_OnLoadImage, uicbMemNeededSz, TAG('k32m'));
+				oaFakeDll.SecurityDescriptor = ExAllocatePool2(ALLOC_TYPE_OnLoadImage, uicbMemNeededSz, TAG('k32m'));
 				if (oaFakeDll.SecurityDescriptor)
 				{
 					//Need to retry

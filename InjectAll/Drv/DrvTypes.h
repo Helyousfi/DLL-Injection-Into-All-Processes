@@ -40,6 +40,14 @@ static const UNICODE_STRING name = RTL_CONSTANT_STRINGW_(label(__))
 	STATIC_UNICODE_STRING(label(m), name);\
 	static OBJECT_ATTRIBUTES oa = { sizeof(oa), 0, const_cast<PUNICODE_STRING>(&label(m)), OBJ_CASE_INSENSITIVE }
 
+#define STATIC_UNICODE_STRING(name, str) \
+static const WCHAR label(__)[] = echo(L)str;\
+static const UNICODE_STRING name = RTL_CONSTANT_STRINGW_(label(__))
+
+#define STATIC_OBJECT_ATTRIBUTES(oa, name)\
+	STATIC_UNICODE_STRING(label(m), name);\
+	static OBJECT_ATTRIBUTES oa = { sizeof(oa), 0, const_cast<PUNICODE_STRING>(&label(m)), OBJ_CASE_INSENSITIVE }
+
 //Flips kernel memory allocation pool tag around (for debuggers)
 #define TAG(t) ( ((((ULONG)t) & 0xFF) << (8 * 3)) | ((((ULONG)t) & 0xFF00) << (8 * 1)) | ((((ULONG)t) & 0xFF0000) >> (8 * 1)) | ((((ULONG)t) & 0xFF000000) >> (8 * 3)) )
 
@@ -49,8 +57,102 @@ enum SECTION_TYPE {
 	SEC_TP_WOW = 'w',        //WOW64 section - meaning: 32-bit on a 64-bit OS
 };
 
+//Path where fake.dll is located on disk
+//INFO: To make this injection work, the DLL must be placed in the appropriate System32 folder
+//
+#define INJECTED_DLL_NT_PATH_NTV "\\systemroot\\system32\\" INJECTED_DLL_FILE_NAME        //Native
+#define INJECTED_DLL_NT_PATH_WOW "\\systemroot\\syswow64\\" INJECTED_DLL_FILE_NAME32      //WOW on a 64-bit OS
+
+//Undocumented structs:
+///////////////////////////////////////////////////////
+enum SECTION_INFORMATION_CLASS
+{
+	SectionBasicInformation,
+	SectionImageInformation
+};
+
+struct SECTION_IMAGE_INFORMATION
+{
+	PVOID TransferAddress;
+	ULONG ZeroBits;
+	SIZE_T MaximumStackSize;
+	SIZE_T CommittedStackSize;
+	ULONG SubSystemType;
+	union
+	{
+		struct s
+		{
+			USHORT SubSystemMinorVersion;
+			USHORT SubSystemMajorVersion;
+		};
+		ULONG SubSystemVersion;
+	};
+	ULONG GpValue;
+	USHORT ImageCharacteristics;
+	USHORT DllCharacteristics;
+	USHORT Machine;
+	BOOLEAN ImageContainsCode;
+	union
+	{
+		UCHAR ImageFlags;
+		struct u
+		{
+			UCHAR ComPlusNativeReady : 1;
+			UCHAR ComPlusILOnly : 1;
+			UCHAR ImageDynamicallyRelocated : 1;
+			UCHAR ImageMappedFlat : 1;
+			UCHAR BaseBelow4gb : 1;
+			UCHAR Reserved : 3;
+		};
+	};
+	ULONG LoaderFlags;
+	ULONG ImageFileSize;
+	ULONG CheckSum;
+};
+
+
+enum KAPC_ENVIRONMENT
+{
+	OriginalApcEnvironment,
+	AttachedApcEnvironment,
+	CurrentApcEnvironment,
+	InsertApcEnvironment
+};
+
+typedef
+VOID __stdcall
+KNORMAL_ROUTINE(
+	__in_opt PVOID NormalContext,
+	__in_opt PVOID SystemArgument1,
+	__in_opt PVOID SystemArgument2
+);
+typedef KNORMAL_ROUTINE* PKNORMAL_ROUTINE;
+
+typedef
+VOID __stdcall
+KKERNEL_ROUTINE(
+	__in struct _KAPC* Apc,
+	__deref_inout_opt PKNORMAL_ROUTINE* NormalRoutine,
+	__deref_inout_opt PVOID* NormalContext,
+	__deref_inout_opt PVOID* SystemArgument1,
+	__deref_inout_opt PVOID* SystemArgument2
+);
+typedef KKERNEL_ROUTINE* PKKERNEL_ROUTINE;
+
+typedef
+VOID __stdcall
+KRUNDOWN_ROUTINE(
+	__in struct _KAPC* Apc
+);
+typedef KRUNDOWN_ROUTINE* PKRUNDOWN_ROUTINE;
+
+//End of Undocumented structs:
+///////////////////////////////////////////////////////
+
 
 extern "C" {
+	__declspec(dllimport) PIMAGE_NT_HEADERS RtlImageNtHeader(PVOID Base);
+	__declspec(dllimport) PVOID RtlImageDirectoryEntryToData(PVOID Base, BOOLEAN MappedAsImage, USHORT DirectoryEntry, PULONG Size);
 	__declspec(dllimport) BOOLEAN PsIsProcessBeingDebugged(PEPROCESS Process);
 	__declspec(dllimport) NTSTATUS ZwQueryInformationProcess
 	(
@@ -59,5 +161,13 @@ extern "C" {
 		OUT PVOID ProcessInformation,
 		IN ULONG ProcessInformationLength,
 		OUT PULONG ReturnLength OPTIONAL
+	);
+
+	__declspec(dllimport) NTSTATUS ZwQuerySection(
+		IN HANDLE SectionHandle,
+		IN ULONG SectionInformationClass,
+		OUT PVOID SectionInformation,
+		IN ULONG SectionInformationLength,
+		OUT PSIZE_T ResultLength OPTIONAL
 	);
 }

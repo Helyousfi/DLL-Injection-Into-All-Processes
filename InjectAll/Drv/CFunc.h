@@ -12,5 +12,6 @@ public:
 	static BOOLEAN IsSuffixedUnicodeString(PCUNICODE_STRING FullName, PCUNICODE_STRING ShortName, BOOLEAN CaseInsensitive = TRUE);
 	static BOOLEAN IsMappedByLdrLoadDll(PCUNICODE_STRING ShortName);
 	static BOOLEAN IsSpecificProcessW(HANDLE ProcessId, const WCHAR* ImageName, BOOLEAN bIsDebugged);
+	static UINT FindStringByTag(PVOID BaseAddress, UINT cbSize, const GUID* pTag);
 };
 

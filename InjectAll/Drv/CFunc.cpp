@@ -154,3 +154,32 @@ BOOLEAN CFunc::IsSpecificProcessW(HANDLE ProcessId, const WCHAR* ImageName, BOOL
 
 	return bResult;
 }
+
+UINT CFunc::FindStringByTag(PVOID BaseAddress, UINT cbSize, const GUID* pTag)
+{
+	//Locate string that follows 'pTag' in byte array - both must be declared in a static SEARCH_TAG_W struct
+	//'BaseAddress' = beginning of the byte array
+	//'cbSize' = size of 'BaseAddress' in BYTEs
+	//RETURN:
+	//		= Offset of the string that follows 'pTag' in BYTEs from the 'BaseAddress'
+	//		= -1 if not found
+	ASSERT(BaseAddress);
+
+	union
+	{
+		const BYTE* pS;
+		const GUID* pG;
+	};
+
+	pS = (const BYTE*)BaseAddress;
+	for (const BYTE* pE = pS + cbSize - sizeof(GUID); pS <= pE; pS++)
+	{
+		if (memcmp(pG, pTag, sizeof(GUID)) == 0)
+		{
+			//Matched!
+			return (UINT)(pS + sizeof(GUID) - (const BYTE*)BaseAddress);
+		}
+	}
+
+	return (UINT)-1;
+}

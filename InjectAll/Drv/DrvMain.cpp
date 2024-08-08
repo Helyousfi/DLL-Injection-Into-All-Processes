@@ -32,6 +32,7 @@ void OnLoadImage(
 	UNREFERENCED_PARAMETER(ProcessId);
 	UNREFERENCED_PARAMETER(ImageInfo);
 
+	NTSTATUS status;
 
 	// NTSTATUS status;
 
@@ -60,6 +61,38 @@ void OnLoadImage(
 #endif
 		//Now we can proceed with our injection
 		DbgPrintLine("Image load (WOW=%d) for PID=%u: \"%wZ\"", bWowProc, (ULONG)(ULONG_PTR)ProcessId, FullImageName);
+		
+		//Get our (DLL) section to inject
+		DLL_STATS* pDS;
+		status = sec.GetSection(&pDS);
+		if (NT_SUCCESS(status))
+		{
+			
+		}
+		else
+		{
+			//Error
+			DbgPrintLine("ERROR: (0x%X) sec.GetSection, PID=%u", status, (ULONG)(ULONG_PTR)ProcessId);
+		}
+
+		//The following only applies to a 64-bit build
+		//INFO: We need to inject our DLL into a 32-bit process too...
+#ifdef _WIN64
+		if (bWowProc)
+		{
+			status = secWow.GetSection(&pDS);
+			if (NT_SUCCESS(status))
+			{
+				
+			}
+			else
+			{
+				//Error
+				DbgPrintLine("ERROR: (0x%X) secWow.GetSection, PID=%u", status, (ULONG)(ULONG_PTR)ProcessId);
+			}
+		}
+#endif
+	
 	}
 }
 
