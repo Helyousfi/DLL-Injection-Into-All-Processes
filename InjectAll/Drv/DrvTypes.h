@@ -8,6 +8,8 @@
 
 #include "SharedDefs.h"
 
+//#define DBG_VERBOSE_DRV                          //Uncomment this line to make verbose debugging output for the driver's DEBUG build
+
 #define DBG_PREFIX DBG_PREFIX_ALL "Drv: " // Prefix to be added in all DbgPrint calls in this project
 #define DbgPrintLine(s, ...) DbgPrint(DBG_PREFIX s "\n", __VA_ARGS__)
 

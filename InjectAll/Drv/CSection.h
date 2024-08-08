@@ -68,8 +68,8 @@ class CSection
 public:
 	NTSTATUS Initialize(SECTION_TYPE type);
 	NTSTATUS GetSection(DLL_STATS** ppOutSectionInfo = NULL);
-	NTSTATUS InjectDLL(DLL_STATS* pDllStats);
-	static NTSTATUS MapSectionForShellCode(DLL_STATS* pDllStats, PVOID* pOutBaseAddr = NULL);
+	// NTSTATUS InjectDLL(DLL_STATS* pDllStats);
+	// static NTSTATUS MapSectionForShellCode(DLL_STATS* pDllStats, PVOID* pOutBaseAddr = NULL);
 	NTSTATUS FreeSection();
 private:
 	NTSTATUS CreateKnownDllSection(DLL_STATS& outStats);
