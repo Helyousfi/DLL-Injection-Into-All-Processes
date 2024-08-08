@@ -39,6 +39,10 @@ static const UNICODE_STRING name = RTL_CONSTANT_STRINGW_(label(__))
 	static OBJECT_ATTRIBUTES oa = { sizeof(oa), 0, const_cast<PUNICODE_STRING>(&label(m)), OBJ_CASE_INSENSITIVE }
 
 
+enum SECTION_TYPE {
+	SEC_TP_NATIVE = 'n',     //Native section - meaning: 64-bit on a 64-bit OS, or 32-bit on a 32-bit OS
+	SEC_TP_WOW = 'w',        //WOW64 section - meaning: 32-bit on a 64-bit OS
+};
 
 
 extern "C" {

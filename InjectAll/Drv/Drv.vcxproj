@@ -93,10 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CFunc.cpp" />
+    <ClCompile Include="CSection.cpp" />
     <ClCompile Include="DrvMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CFunc.h" />
+    <ClInclude Include="CSection.h" />
     <ClInclude Include="DrvTypes.h" />
     <ClInclude Include="SharedDefs.h" />
   </ItemGroup>

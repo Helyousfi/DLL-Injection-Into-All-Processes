@@ -51,7 +51,6 @@ void OnLoadImage(
 		//Now we can proceed with our injection
 		DbgPrintLine("Image load (WOW=%d) for PID=%u: \"%wZ\"", bWowProc, (ULONG)(ULONG_PTR)ProcessId, FullImageName);
 	}
-
 }
 
 NTSTATUS FreeResources()
