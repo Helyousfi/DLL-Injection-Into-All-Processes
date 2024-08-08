@@ -11,9 +11,9 @@ extern "C" {
 IMAGE_LOAD_FLAGS g_flags; // Global notification flags
 
 void OnLoadImage(
-	PUNICODE_STRING FullImageName,
-	HANDLE ProcessId,
-	PIMAGE_INFO ImageInfo
+	PUNICODE_STRING FullImageName,	// The name of the image being loaded
+	HANDLE ProcessId,				// The process into which the image is being loaded
+	PIMAGE_INFO ImageInfo			// Containing information about the loaded image, such as its base address and size.
 ) 
 {
 	// Called back notification that an image is loaded (or mapped in memory)
@@ -25,8 +25,8 @@ void OnLoadImage(
 
 	// NTSTATUS status;
 
-	ASSERT(FullImageName);
-	ASSERT(ImageInfo);
+	ASSERT(FullImageName);		//  Ensure that these pointers are not null
+	ASSERT(ImageInfo);			// ensure that these pointers are not null
 
 	STATIC_UNICODE_STRING(kernel32, "\\kernel32.dll");
 

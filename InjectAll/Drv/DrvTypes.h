@@ -23,7 +23,6 @@
 enum IMAGE_LOAD_FLAGS
 {
 	flImageNotifySet, //[set] when PsSetLoadImageNotifyRoutine was enabled
-
 };
 
 
