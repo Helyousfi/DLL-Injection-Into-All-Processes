@@ -44,4 +44,12 @@ static const UNICODE_STRING name = RTL_CONSTANT_STRINGW_(label(__))
 
 extern "C" {
 	__declspec(dllimport) BOOLEAN PsIsProcessBeingDebugged(PEPROCESS Process);
+	__declspec(dllimport) NTSTATUS ZwQueryInformationProcess
+	(
+		IN HANDLE ProcessHandle,
+		IN  PROCESSINFOCLASS ProcessInformationClass,
+		OUT PVOID ProcessInformation,
+		IN ULONG ProcessInformationLength,
+		OUT PULONG ReturnLength OPTIONAL
+	);
 }

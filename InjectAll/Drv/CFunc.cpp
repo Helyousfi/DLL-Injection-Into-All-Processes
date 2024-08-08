@@ -1,6 +1,5 @@
 #include "CFunc.h"
 
-
 BOOLEAN CFunc::IsSuffixedUnicodeString(PCUNICODE_STRING FullName, PCUNICODE_STRING ShortName, BOOLEAN CaseInsensitive)
 {
 	//Check if 'FullName' ends with 'ShortName'

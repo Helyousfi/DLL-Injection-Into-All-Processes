@@ -23,7 +23,7 @@ void OnLoadImage(
 	UNREFERENCED_PARAMETER(ImageInfo);
 
 
-	NTSTATUS status;
+	// NTSTATUS status;
 
 	ASSERT(FullImageName);
 	ASSERT(ImageInfo);
@@ -35,9 +35,21 @@ void OnLoadImage(
 		ProcessId == PsGetCurrentProcessId() &&	// Our section can be mapped remotely into this process - we don't need that
 		CFunc::IsSuffixedUnicodeString(FullImageName, &kernel32) &&
 		CFunc::IsMappedByLdrLoadDll(&kernel32)
+#if defined(_DEBUG) && defined(LIMIT_INJECTION_TO_PROC)		
+		&& CFunc::IsSpecificProcessW(ProcessId, LIMIT_INJECTION_TO_PROC, FALSE)  //For debug build limit it to specific process only (for testing purposes)
+#endif
 		)
 	{
-
+#ifdef _WIN64
+		//Is it a 32-bit process running in a 64-bit OS
+		BOOLEAN bWowProc = IoIs32bitProcess(NULL);
+#else
+		//Cannot be a WOW64 process on a 32-bit OS
+		BOOLEAN bWowProc = FALSE;
+		UNREFERENCED_PARAMETER(bWowProc);
+#endif
+		//Now we can proceed with our injection
+		DbgPrintLine("Image load (WOW=%d) for PID=%u: \"%wZ\"", bWowProc, (ULONG)(ULONG_PTR)ProcessId, FullImageName);
 	}
 
 }
