@@ -1,6 +1,7 @@
 // Main Driver entry cpp file
 
 #include "CFunc.h"
+#include "CSection.h"
 
 // Global variables
 
@@ -9,6 +10,15 @@ extern "C" {
 }
 
 IMAGE_LOAD_FLAGS g_flags; // Global notification flags
+
+
+CSection sec;                                   //Native section object
+
+#ifdef _WIN64
+CSection secWow;                                //WOW64 section object (used only for a 64-bit build)
+#endif
+
+
 
 void OnLoadImage(
 	PUNICODE_STRING FullImageName,	// The name of the image being loaded

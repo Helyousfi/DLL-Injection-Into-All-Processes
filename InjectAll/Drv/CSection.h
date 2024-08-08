@@ -55,6 +55,8 @@ struct DLL_STATS {
 	}
 };
 
+#define ALLOC_TYPE_OnLoadImage PagedPool		//We can do it because: The OS calls the driver's image-load notify routine at PASSIVE_LEVEL
+
 
 class CSection
 {

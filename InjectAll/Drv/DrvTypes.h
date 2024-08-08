@@ -38,6 +38,9 @@ static const UNICODE_STRING name = RTL_CONSTANT_STRINGW_(label(__))
 	STATIC_UNICODE_STRING(label(m), name);\
 	static OBJECT_ATTRIBUTES oa = { sizeof(oa), 0, const_cast<PUNICODE_STRING>(&label(m)), OBJ_CASE_INSENSITIVE }
 
+//Flips kernel memory allocation pool tag around (for debuggers)
+#define TAG(t) ( ((((ULONG)t) & 0xFF) << (8 * 3)) | ((((ULONG)t) & 0xFF00) << (8 * 1)) | ((((ULONG)t) & 0xFF0000) >> (8 * 1)) | ((((ULONG)t) & 0xFF000000) >> (8 * 3)) )
+
 
 enum SECTION_TYPE {
 	SEC_TP_NATIVE = 'n',     //Native section - meaning: 64-bit on a 64-bit OS, or 32-bit on a 32-bit OS
