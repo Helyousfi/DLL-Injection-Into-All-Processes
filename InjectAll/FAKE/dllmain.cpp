@@ -49,7 +49,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     {
     case DLL_PROCESS_ATTACH:
     {
-        //__debugbreak();             //User-mode breakpoint
+        __debugbreak();             //User-mode breakpoint
 
         PTEB pTEB = Get_TEB();
         PPEB pPEB = Get_PEB(pTEB);
