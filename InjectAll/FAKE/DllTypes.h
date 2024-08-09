@@ -58,7 +58,7 @@ extern "C" {
         _In_opt_ PLARGE_INTEGER ByteOffset,
         _In_opt_ PULONG Key
     );
-
+    
     __declspec(dllimport) int __CRTDECL vsprintf_s(
         _Out_writes_(_BufferCount) _Always_(_Post_z_) char* const _Buffer,
         _In_                                          size_t      const _BufferCount,
@@ -75,9 +75,9 @@ extern "C" {
         _In_ PLARGE_INTEGER Time,
         _Out_ PTIME_FIELDS TimeFields
     );
-
+    /*
     __declspec(dllimport) NTSTATUS NTAPI ZwQueueApcThread(HANDLE hThread,
-        void* ApcRoutine, PVOID ApcContext, PVOID Argument1, PVOID Argument2);
+        void* ApcRoutine, PVOID ApcContext, PVOID Argument1, PVOID Argument2);*/
 };
 ///////////////////////////////////////////////////////
 

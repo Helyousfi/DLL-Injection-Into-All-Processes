@@ -50,21 +50,21 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     case DLL_PROCESS_ATTACH:
     {
         __debugbreak();             //User-mode breakpoint
-
+        DbgPrintLine("New Process Is Loading the DLL");
         PTEB pTEB = Get_TEB();
         PPEB pPEB = Get_PEB(pTEB);
-
+        
         //Get current PID
         CLIENT_ID* pCID = (CLIENT_ID*)((BYTE*)pTEB + sizeof(NT_TIB) + sizeof(void*));
         ULONG uiPID = (ULONG)(ULONG_PTR)pCID->UniqueProcess;
-
+        
         //Get current time
         LARGE_INTEGER liSt = {};
         NtQuerySystemTime(&liSt);
         RtlSystemTimeToLocalTime(&liSt, &liSt);
         TIME_FIELDS tfSt = {};
         RtlTimeToTimeFields(&liSt, &tfSt);
-
+        
         //We can't use SEH!
         if(pPEB->ProcessParameters)
         {

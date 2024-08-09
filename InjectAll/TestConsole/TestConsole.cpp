@@ -18,11 +18,10 @@ void SetSD_InjectAllFolder(LPCTSTR pStrFldrPath);
 
 int main()
 {
-	//SetSD_InjectAllFolder(L"C:\\InjectAll");
+	SetSD_InjectAllFolder(L"C:\\InjectAll");
 
-
-	//LPCTSTR pStrDllName = L"" INJECTED_DLL_FILE_NAME;
-	LPCTSTR pStrDllName = L"..\\x64\\Release\\" INJECTED_DLL_FILE_NAME;
+	LPCTSTR pStrDllName = L"..\\x64\\Debug\\" INJECTED_DLL_FILE_NAME;
+	// LPCTSTR pStrDllName = L"..\\x64\\Release\\" INJECTED_DLL_FILE_NAME;
 
 	HMODULE hMod = LoadLibrary(pStrDllName);
 	if (hMod)

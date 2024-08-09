@@ -40,9 +40,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="loadcfg32.asm">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="loadcfg64.asm">
       <Filter>Source Files</Filter>
     </None>
