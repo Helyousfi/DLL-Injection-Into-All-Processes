@@ -24,9 +24,6 @@
     <ClInclude Include="DllTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Drv\SharedDefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -43,12 +40,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="dll_asm32.asm">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="dll_asm64.asm">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="loadcfg32.asm">
       <Filter>Source Files</Filter>
     </None>
@@ -58,10 +49,5 @@
     <None Include="Exports.def">
       <Filter>Header Files</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="FAKE.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

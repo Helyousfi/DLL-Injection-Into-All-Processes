@@ -60,7 +60,7 @@ PPEB Get_PEB(PTEB pTeb);
 NTSTATUS LogToFileFmt(const char* pstrFmt, ...);
 
 
-extern "C" void __stdcall UserModeNormalRoutine(PVOID NormalContext, PVOID SystemArgument1, PVOID SystemArgument2);
+// extern "C" void __stdcall UserModeNormalRoutine(PVOID NormalContext, PVOID SystemArgument1, PVOID SystemArgument2);
 
 
 
@@ -160,7 +160,7 @@ void __declspec(dllexport) __cdecl f1(const void* pPtr)
 
         //The following is needed to mark UserModeNormalRoutine function as a valid call-target when CFG is enabled
         //with the "Export suppression" option on. Otherwise invoking it for our APC will crash the target process!
-        ZwQueueApcThread(0, UserModeNormalRoutine, 0, 0, 0);
+        // ZwQueueApcThread(0, UserModeNormalRoutine, 0, 0, 0);
     }
 }
 
