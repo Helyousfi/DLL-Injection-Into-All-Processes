@@ -14,3 +14,5 @@ Types of Drivers:
 - Kernel-mode drivers: Run in the operating system's kernel space and have high privileges. These are often used for hardware drivers.
 - User-mode drivers: Run in user space and have limited privileges. These are generally easier and safer to develop.
 
+
+![image](https://github.com/user-attachments/assets/b17ad23f-1ba3-4abd-97f8-3d9a173f47d2)
