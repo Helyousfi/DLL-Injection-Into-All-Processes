@@ -1,4 +1,30 @@
 //Custom types for our DLL
+
+//  
+//    Test solution that demonstrates DLL injection into all running processes
+//    Copyright (c) 2021 www.dennisbabkin.com
+//
+//        https://dennisbabkin.com/blog/?i=AAA10800
+//
+//    Credit: Rbmm
+//
+//        https://github.com/rbmm/INJECT
+//
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+//    
+//        https://www.apache.org/licenses/LICENSE-2.0
+//    
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+//  
+//
+
+
 #pragma once
 
 #include <Windows.h>                //Win32 APIs
@@ -58,7 +84,7 @@ extern "C" {
         _In_opt_ PLARGE_INTEGER ByteOffset,
         _In_opt_ PULONG Key
     );
-    
+
     __declspec(dllimport) int __CRTDECL vsprintf_s(
         _Out_writes_(_BufferCount) _Always_(_Post_z_) char* const _Buffer,
         _In_                                          size_t      const _BufferCount,
@@ -75,9 +101,9 @@ extern "C" {
         _In_ PLARGE_INTEGER Time,
         _Out_ PTIME_FIELDS TimeFields
     );
-    /*
+
     __declspec(dllimport) NTSTATUS NTAPI ZwQueueApcThread(HANDLE hThread,
-        void* ApcRoutine, PVOID ApcContext, PVOID Argument1, PVOID Argument2);*/
+        void* ApcRoutine, PVOID ApcContext, PVOID Argument1, PVOID Argument2);
 };
 ///////////////////////////////////////////////////////
 
@@ -94,7 +120,6 @@ struct SEARCH_TAG_W {
 };
 #pragma warning(pop)
 #pragma pack(pop)
-
 
 
 

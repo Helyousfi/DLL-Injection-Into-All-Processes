@@ -43,15 +43,23 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <MASM Include="dll_asm64.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="dll_asm64.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Exports.def">
+      <Filter>Source Files</Filter>
+    </None>
     <None Include="loadcfg64.asm">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="Exports.def">
-      <Filter>Header Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="FAKE1.rc">
+    <ResourceCompile Include="FAKE.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

@@ -35,7 +35,7 @@ PPEB Get_PEB(PTEB pTeb);
 NTSTATUS LogToFileFmt(const char* pstrFmt, ...);
 
 
-// extern "C" void __stdcall UserModeNormalRoutine(PVOID NormalContext, PVOID SystemArgument1, PVOID SystemArgument2);
+extern "C" void __stdcall UserModeNormalRoutine(PVOID NormalContext, PVOID SystemArgument1, PVOID SystemArgument2);
 
 
 
