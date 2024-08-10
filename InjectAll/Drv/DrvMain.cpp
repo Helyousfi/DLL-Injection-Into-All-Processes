@@ -6,7 +6,7 @@
 // Global variables
 
 extern "C" {
-	PDRIVER_OBJECT g_DriveObject; // Driver Object - read Only (for reference counting)
+	PDRIVER_OBJECT g_DriverObject; // Driver Object - read Only (for reference counting)
 }
 
 IMAGE_LOAD_FLAGS g_flags; // Global notification flags
@@ -132,7 +132,7 @@ extern "C" NTSTATUS NTAPI DriverEntry(
 	UNREFERENCED_PARAMETER(DriverObject);
 	UNREFERENCED_PARAMETER(RegistryPath);
 
-	g_DriveObject = DriverObject;
+	g_DriverObject = DriverObject;
 
 	// Debugging output function
 	DbgPrintLine("DiverLoad(0x%p, %wZ)", DriverObject, RegistryPath);

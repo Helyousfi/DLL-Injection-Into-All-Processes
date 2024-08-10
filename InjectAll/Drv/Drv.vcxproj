@@ -102,6 +102,11 @@
     <ClInclude Include="DrvTypes.h" />
     <ClInclude Include="SharedDefs.h" />
   </ItemGroup>
+  <ItemGroup>
+    <MASM Include="asm64.asm">
+      
+    </MASM>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

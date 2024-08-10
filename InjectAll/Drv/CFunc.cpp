@@ -72,6 +72,84 @@ BOOLEAN CFunc::IsMappedByLdrLoadDll(PCUNICODE_STRING ShortName)
 	return FALSE;
 }
 
+PCWSTR CFunc::debugGetCurrentProcName(char* pBuff, size_t szcbLn, BOOL bFileNameOnly)
+{
+	//Retrieves current process name
+	//'pBuff' = buffer to use
+	//'szcbLn' = size of 'pBuff' in BYTEs. It is recommended to set it to at least to GCPFN_BUFF_SIZE, or larger.
+	//'bFileNameOnly' = TRUE to return file name only, FALSE - to get the full path
+	//RETURN:
+	//		= Pointer to the process image/file path/name, or
+	//		= "-", "?" or string with error code otherwise
+
+	//Do we have valid params?
+	if (!pBuff ||
+		szcbLn < (sizeof(UNICODE_STRING) + 1 * sizeof(WCHAR)) ||
+		szcbLn > MAXUSHORT)
+	{
+		//Bad input
+		ASSERT(NULL);
+		return L"-";
+	}
+
+	UNICODE_STRING* puStr = (UNICODE_STRING*)pBuff;
+	PWCH pWBuff = (PWCH)((BYTE*)pBuff + sizeof(UNICODE_STRING));
+	puStr->Length = 0;
+	puStr->MaximumLength = (USHORT)(szcbLn - sizeof(UNICODE_STRING));
+	puStr->Buffer = pWBuff;
+
+	ULONG uicbSzRet = 0;
+	NTSTATUS status = ZwQueryInformationProcess(NtCurrentProcess(), ProcessImageFileName, puStr, (ULONG)szcbLn, &uicbSzRet);
+	if (status == STATUS_SUCCESS)
+	{
+		//Safety null
+		*(WCHAR*)((BYTE*)pBuff + szcbLn - sizeof(WCHAR)) = 0;
+
+		//Make sure that we have a null-terminated string
+		if (puStr->Length + sizeof(WCHAR) <= puStr->MaximumLength)
+		{
+			*(WCHAR*)((BYTE*)puStr->Buffer + puStr->Length) = 0;
+		}
+
+		if (bFileNameOnly)
+		{
+			//Find last slash
+			WCHAR* pLastSlash = NULL;
+			for (WCHAR* pS = pWBuff;; pS++)
+			{
+				WCHAR z = *pS;
+				if (!z)
+				{
+					if (pLastSlash)
+					{
+						//Use it
+						return pLastSlash + 1;
+					}
+
+					break;
+				}
+				else if (z == L'\\')
+				{
+					pLastSlash = pS;
+				}
+			}
+		}
+	}
+	else
+	{
+		//Failed
+		if (RtlStringCchPrintfW(pWBuff, (szcbLn - sizeof(UNICODE_STRING)) / sizeof(WCHAR),
+			L"<Err:0x%x>", status) != STATUS_SUCCESS)
+		{
+			//Failed even here
+			ASSERT(NULL);
+			return L"?";
+		}
+	}
+
+	//Return result
+	return pWBuff;
+}
 
 BOOLEAN CFunc::IsSpecificProcessW(HANDLE ProcessId, const WCHAR* ImageName, BOOLEAN bIsDebugged)
 {
