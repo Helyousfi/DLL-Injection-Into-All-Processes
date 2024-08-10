@@ -1,3 +1,12 @@
+## Tools Needed 
+- Process Hacker - to view running processes & modules.
+- DebugView - to view debugging output from our driver.
+- WinObj - to view kernel space objects.
+- PEInternals - to statically view PE files.
+- WERSetup - to set up Windows Error Reporting to catch user-mode process crashes.
+- WinAPI Search - to check Imports/Exports from PE files and to search for error codes.
+- Driver Loader/Unloaded - to register, start, stop and unregister our driver.
+
 Kernel32.dll is a core Windows system file responsible for managing memory, input/output operations, and interrupts. It provides essential functions for processes and threads, file handling, and hardware abstraction. This dynamic link library is crucial for the execution of many system-level operations in the Windows operating system. \
 
 Kernel32.dll contains numerous essential functions for system operations. Some examples include: \
