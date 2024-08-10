@@ -132,7 +132,7 @@ extern "C" NTSTATUS NTAPI DriverEntry(
 	UNREFERENCED_PARAMETER(DriverObject);
 	UNREFERENCED_PARAMETER(RegistryPath);
 
-	/*g_DriveObject = DriverObject;
+	g_DriveObject = DriverObject;
 
 	// Debugging output function
 	DbgPrintLine("DiverLoad(0x%p, %wZ)", DriverObject, RegistryPath);
@@ -148,7 +148,7 @@ extern "C" NTSTATUS NTAPI DriverEntry(
 	{
 		// ERROR
 		DbgPrintLine("CRITICAL : (0x%X) PsSetLoadImageNotifyRoutine", status);
-	}*/
+	}
 
 
 
