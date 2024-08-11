@@ -59,7 +59,7 @@ NTSTATUS CSection::GetSection(DLL_STATS** ppOutSectionInfo)
 		Context = NULL;
 
 		//Alloc memory
-		DLL_STATS* pDStats = (DLL_STATS*)ExAllocatePool2(ALLOC_TYPE_OnLoadImage, sizeof(DLL_STATS), TAG('kDSm'));
+		DLL_STATS* pDStats = (DLL_STATS*)ExAllocatePool2(POOL_FLAG_PAGED, sizeof(DLL_STATS), TAG('kDSm'));
 		if (!pDStats)
 		{
 			DbgPrintLine("Memory allocation failed: ExAllocatePool2 returned NULL");
