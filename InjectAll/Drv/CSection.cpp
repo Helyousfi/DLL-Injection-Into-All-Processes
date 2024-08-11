@@ -295,7 +295,7 @@ NTSTATUS CSection::CreateKnownDllSection(DLL_STATS& outStats)
 				}
 
 				//Allocate mem
-				oaFakeDll.SecurityDescriptor = ExAllocatePool2(ALLOC_TYPE_OnLoadImage, uicbMemNeededSz, TAG('k32m'));
+				oaFakeDll.SecurityDescriptor = ExAllocatePool2(POOL_FLAG_PAGED, uicbMemNeededSz, TAG('k32m'));
 				if (oaFakeDll.SecurityDescriptor)
 				{
 					//Need to retry
