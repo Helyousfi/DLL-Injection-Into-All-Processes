@@ -1,5 +1,8 @@
 #include "CFunc.h"
 
+
+
+
 BOOLEAN CFunc::IsSuffixedUnicodeString(PCUNICODE_STRING FullName, PCUNICODE_STRING ShortName, BOOLEAN CaseInsensitive)
 {
 	//Check if 'FullName' ends with 'ShortName'
@@ -22,6 +25,9 @@ BOOLEAN CFunc::IsSuffixedUnicodeString(PCUNICODE_STRING FullName, PCUNICODE_STRI
 
 	return FALSE;
 }
+
+
+
 
 
 BOOLEAN CFunc::IsMappedByLdrLoadDll(PCUNICODE_STRING ShortName)
@@ -71,6 +77,7 @@ BOOLEAN CFunc::IsMappedByLdrLoadDll(PCUNICODE_STRING ShortName)
 
 	return FALSE;
 }
+
 
 PCWSTR CFunc::debugGetCurrentProcName(char* pBuff, size_t szcbLn, BOOL bFileNameOnly)
 {
@@ -150,6 +157,9 @@ PCWSTR CFunc::debugGetCurrentProcName(char* pBuff, size_t szcbLn, BOOL bFileName
 	//Return result
 	return pWBuff;
 }
+
+
+
 
 BOOLEAN CFunc::IsSpecificProcessW(HANDLE ProcessId, const WCHAR* ImageName, BOOLEAN bIsDebugged)
 {
@@ -232,6 +242,9 @@ BOOLEAN CFunc::IsSpecificProcessW(HANDLE ProcessId, const WCHAR* ImageName, BOOL
 
 	return bResult;
 }
+
+
+
 
 UINT CFunc::FindStringByTag(PVOID BaseAddress, UINT cbSize, const GUID* pTag)
 {
