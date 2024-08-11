@@ -209,7 +209,7 @@ extern "C" NTSTATUS NTAPI DriverEntry(PDRIVER_OBJECT DriverObject, PUNICODE_STRI
 	//Main driver entry routine
 	UNREFERENCED_PARAMETER(DriverObject);
 	UNREFERENCED_PARAMETER(RegistryPath);
-
+	DbgPrintLine("DriverEntry");
 	DbgPrintLine("DriverLoad(0x%p, %wZ)", DriverObject, RegistryPath);
 
 	g_DriverObject = DriverObject;

@@ -30,7 +30,7 @@ NTSTATUS CSection::Initialize(SECTION_TYPE type)
 
 	//Initialize our singleton
 	RtlRunOnceInitialize(&SectionSingletonState);
-
+	DbgPrintLine("Section Initialize!");
 	return STATUS_SUCCESS;
 }
 
@@ -42,6 +42,7 @@ NTSTATUS CSection::GetSection(DLL_STATS** ppOutSectionInfo)
 	//'ppOutSectionInfo' = if not NULL, receives the section object info, or NULL if error
 	//RETURN:
 	//		= Status of operation
+	DbgPrint("GetSection");
 	NTSTATUS status = STATUS_SUCCESS;
 
 	//Make sure that CSection::Initialize was called!
@@ -53,6 +54,7 @@ NTSTATUS CSection::GetSection(DLL_STATS** ppOutSectionInfo)
 	status = RtlRunOnceBeginInitialize(&SectionSingletonState, 0, &Context);
 	if (status == STATUS_PENDING)
 	{
+		DbgPrint("First Initialization");
 		//We get here only during the first initialization
 		Context = NULL;
 
