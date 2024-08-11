@@ -46,7 +46,7 @@ NTSTATUS CSection::GetSection(DLL_STATS** ppOutSectionInfo)
 	NTSTATUS status = STATUS_SUCCESS;
 
 	//Make sure that CSection::Initialize was called!
-	DbgPrint("sectionType = %d\n", sectionType);
+	DbgPrintLine("sectionType = %d\n", sectionType);
 	ASSERT(sectionType == SEC_TP_NATIVE || sectionType == SEC_TP_WOW);
 
 	//Use the singleton approach
@@ -54,12 +54,16 @@ NTSTATUS CSection::GetSection(DLL_STATS** ppOutSectionInfo)
 	status = RtlRunOnceBeginInitialize(&SectionSingletonState, 0, &Context);
 	if (status == STATUS_PENDING)
 	{
-		DbgPrint("First Initialization");
+		DbgPrintLine("First Initialization");
 		//We get here only during the first initialization
 		Context = NULL;
 
 		//Alloc memory
-		DLL_STATS* pDStats = (DLL_STATS*)ExAllocatePool2(ALLOC_TYPE_OnLoadImage, sizeof(DLL_STATS), TAG('kDSm'));
+		DLL_STATS* pDStats = (DLL_STATS*)ExAllocatePool2(POOL_FLAG_NON_PAGED, sizeof(DLL_STATS), TAG('kDSm'));
+		if (!pDStats)
+		{
+			DbgPrintLine("Memory allocation failed: ExAllocatePool2 returned NULL");
+		}
 		if (pDStats)
 		{
 			//Need to "trick" the system into creating a KnownDll section for us with the SD of the kernel32.dll section
