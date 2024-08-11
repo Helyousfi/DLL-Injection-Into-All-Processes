@@ -45,7 +45,8 @@ NTSTATUS CSection::GetSection(DLL_STATS** ppOutSectionInfo)
 	NTSTATUS status = STATUS_SUCCESS;
 
 	//Make sure that CSection::Initialize was called!
-	//ASSERT(sectionType == SEC_TP_NATIVE || sectionType == SEC_TP_WOW);
+	DbgPrint("sectionType = %d\n", sectionType);
+	ASSERT(sectionType == SEC_TP_NATIVE || sectionType == SEC_TP_WOW);
 
 	//Use the singleton approach
 	PVOID Context = NULL;
